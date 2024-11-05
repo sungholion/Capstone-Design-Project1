@@ -1,8 +1,23 @@
 from flask import Blueprint, jsonify # Blueprint를 통해 라우팅 함수 관리, jsonify를 통해 반환값을 json형식으로 변환
 import pymysql  # mysql을 python에서 사용할 수 있도록 하는 라이브러리
+from dotenv import load_dotenv # db 정보
+import os
 import json # json 데이터 타입
 
-db = pymysql.connect(host='180.66.240.165', port=53306, user='root', password='U6ycE],+', db='xedb', charset='utf8')
+load_dotenv()
+
+# Access environment variables
+db = pymysql.connect(
+    host=os.getenv('DB_HOST'),
+    port=int(os.getenv('DB_PORT')),
+    user=os.getenv('DB_USER'),
+    password=os.getenv('DB_PASSWORD'),
+    db=os.getenv('DB_NAME'),
+    charset=os.getenv('DB_CHARSET')
+)
+
+bp = Blueprint('main', __name__, url_prefix='/')
+# Your route definitions contin
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
